@@ -13,7 +13,7 @@ const ContactForm = () => {
   return (
     <div className="App">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div data-testid="firstDiv">
           <label htmlFor="firstName">First Name</label>
           <input
             id="firstName"
@@ -22,7 +22,7 @@ const ContactForm = () => {
             ref={register({ required: true, maxLength: 3 })}
           />
           {errors.firstName && (
-            <p>Looks like there was an error: {errors.firstName.type}</p>
+            <p data-testid="firstError">Looks like there was an error: {errors.firstName.type}</p>
           )}
         </div>
 
@@ -57,7 +57,7 @@ const ContactForm = () => {
             {JSON.stringify(data, null, 2)}
           </pre>
         )}
-        <input data-testid="submit" type="submit" />
+        <input data-testid="submit" value="submit" type="submit" />
       </form>
     </div>
   );

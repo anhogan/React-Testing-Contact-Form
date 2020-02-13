@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, act} from '@testing-library/react';
+import { render, fireEvent, rerender} from '@testing-library/react';
 import ContactForm from './ContactForm';
 
 test('Renders form labels to the screen', () => {
@@ -39,16 +39,15 @@ test('Fill out form', () => {
   expect(message.value).toBe("No message");
 });
 
-test('First name error message', () => {
-  const { getByLabelText, getByText } = render(<ContactForm />);
+test('First name input error', () => {
+  const { getByText, getByTestId, rerender } = render(<ContactForm />);
 
-  const first = getByLabelText(/first name/i);
-  const last = getByLabelText(/last name/i);
+  const submit = getByText(/submit/i);
+  const div = getByTestId("firstDiv");
+  const errors = getByTestId("firstError");
 
-  fireEvent.change(first, {target: {value: "Amanda"}});
-  fireEvent.click(last);
+  fireEvent.click(submit);
 
-  const error = getByText(/maxLength/i);
-
-  expect(error).toBeInTheDocument();
+  rerender(<ContactForm />);
+  expect(div).toContain(errors);
 })
